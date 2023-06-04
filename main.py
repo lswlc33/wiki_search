@@ -1,5 +1,5 @@
-import sys, re, sys, os, requests
-from PyQt5 import QtCore, QtGui, QtWidgets
+import sys, sys, requests
+from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -15,10 +15,8 @@ class Worker(QThread):
         super().__init__(parent)
 
     def run(self):
-        # 在子线程中执行耗时操作
         result1, result2 = self.do_something(self.kw)
-        # 发送信号，将结果传递给主线程
-        self.finished.emit(result1, result2)
+        self.finished.emit(result1, result2)    # 发送信号
 
     def do_something(self,kw):
         if kw == None or kw == "":
@@ -42,11 +40,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
         self.setWindowFlags(Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground, True)
-        self.init_buttom()
-        self.textBrowser.anchorClicked.connect(self.new_anchorClicked)
+        self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground,  True)
+        # 以上是无边框设置
+        self.init_cilck_event()
 
     def new_anchorClicked(self,url):
+        # 重写textBrowser的超链接点击事件
         kw = str(url.toString()).replace("/wiki/", "")
         self.clean_pannel()
         self.new_print("请稍等，正在搜索“{}”\n".format(str(kw)))
@@ -77,12 +76,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         except:
             pass
 
-    def init_buttom(self):
+    def init_cilck_event(self):
         self.pushButton_4.clicked.connect(self.page_change_to_search)
         self.pushButton_3.clicked.connect(self.page_change_to_about)
         self.pushButton_2.clicked.connect(self.go_search)
+        self.textBrowser.anchorClicked.connect(self.new_anchorClicked)
 
     def go_search(self):
+        # 搜索点击事件
         self.clean_pannel()
         kw = self.lineEdit.text()
         self.new_print("请稍等，正在搜索“{}”\n".format(str(kw)))
@@ -90,9 +91,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if r:
             self.check_r(r, kw)
 
-
-    # def add_to_pannel(self, text):
-    #     self.textBrowser.insertHtml(text)
 
     def clean_pannel(self):
         self.textBrowser.clear()
@@ -104,13 +102,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.stackedWidget.setCurrentIndex(0)
 
     def new_print(self, text):
-        # self.textBrowser.appendPlainText(text)
+        # 在textBrowser中打印内容
         text = str(text)
         self.textBrowser.moveCursor(QtGui.QTextCursor.End)
         self.textBrowser.insertHtml(text)
 
 
     def new_search(self, kw):
+        # 使用子线程进行搜索
         self.worker = Worker(kw)
         self.worker.finished.connect(self.handle_result)
         self.worker.start()
@@ -129,6 +128,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def search(self,kw):
+        # 直接搜索，不使用子线程 ———— 已废弃
         if kw == None or kw == "":
             self.new_print("你没有输入内容！")
             return False
@@ -147,6 +147,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def check_r(self, r, kw):
+        # 检查搜索结果
         self.clean_pannel()
         # self.new_print("你搜索的是 “{}”".format(str(kw)))
         if "找不到和查询相匹配的结果。" in r:
@@ -177,8 +178,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.textBrowser.verticalScrollBar().setValue(0)
 
     def network_error(self):
-        self.new_print("网络连接错误！")
-        self.new_print("请检查代理是否连接")
+        self.new_print("网络连接错误！请检查代理是否连接")
+        self.new_print("Please turn on your clash!")
 
 
 if __name__ == "__main__":
