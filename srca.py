@@ -1,6 +1,9 @@
+# 这是命令行版本的，仅存档
+
 import requests
 from bs4 import BeautifulSoup
 import re, sys, os
+
 
 
 def write_to_txt(text):

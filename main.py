@@ -1,14 +1,40 @@
-import sys
+import sys, re, sys, os, requests
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from Ui_window import *
-import requests
 from bs4 import BeautifulSoup
-import re, sys, os
 
 
+class Worker(QThread):
+    finished = pyqtSignal(str, str)
+
+    def __init__(self,kw, parent=None):
+        self.kw = kw
+        super().__init__(parent)
+
+    def run(self):
+        # 在子线程中执行耗时操作
+        result1, result2 = self.do_something(self.kw)
+        # 发送信号，将结果传递给主线程
+        self.finished.emit(result1, result2)
+
+    def do_something(self,kw):
+        if kw == None or kw == "":
+            return "你没有输入内容！",kw
+        
+        elif kw.strip() == "":
+
+            return "你没有输入内容！",kw
+        url = "https://zh.wikipedia.org/w/index.php?search={}&ns0=1".format(str(kw))
+        header = {
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.57"
+        }
+        try:
+            return requests.get(url=url, headers=header).text, kw
+        except:
+            return "网络错误！",kw
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -23,7 +49,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def new_anchorClicked(self,url):
         kw = str(url.toString()).replace("/wiki/", "")
         self.clean_pannel()
-        r = self.search(kw)
+        self.new_print("请稍等，正在搜索“{}”\n".format(str(kw)))
+        r = self.new_search(kw)
         if r:
             self.check_r(r, kw)
 
@@ -59,8 +86,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.clean_pannel()
         kw = self.lineEdit.text()
         self.new_print("请稍等，正在搜索“{}”\n".format(str(kw)))
-        r = self.search(kw)
-        self.update()
+        r = self.new_search(kw)
         if r:
             self.check_r(r, kw)
 
@@ -84,6 +110,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.textBrowser.insertHtml(text)
 
 
+    def new_search(self, kw):
+        self.worker = Worker(kw)
+        self.worker.finished.connect(self.handle_result)
+        self.worker.start()
+
+    def handle_result(self, result1, result2):
+        # 处理子线程传递过来的结果
+        r ,kw = result1, result2
+        print(result1, result2)
+        self.clean_pannel()
+        if r == "你没有输入内容！":
+            self.new_print("你没有输入内容！")
+        elif r == "网络错误！":
+            self.network_error()
+        elif r:
+            self.check_r(r,kw)
+
+
     def search(self,kw):
         if kw == None or kw == "":
             self.new_print("你没有输入内容！")
@@ -99,6 +143,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return requests.get(url=url, headers=header).text
         except:
             self.network_error()
+
 
 
     def check_r(self, r, kw):
