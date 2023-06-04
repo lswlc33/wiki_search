@@ -20,32 +20,15 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setStyleSheet("#frame_2{\n"
-"    border-radius: 35px;\n"
-"    background-color: rgb(255, 255, 255);\n"
-"}\n"
-"\n"
-"QLineEdit{\n"
+        self.frame.setStyleSheet("QLineEdit{\n"
 "    padding-left:25px;\n"
 "    background-color: rgba(255, 255, 255, 0);\n"
 "    border: 0px solid rgba(255, 255, 255, 0);\n"
 "\n"
 "\n"
 "}\n"
-"#pushButton_2{\n"
-"    border-radius: 35px;\n"
-"    background-color: rgb(255, 255, 255);\n"
-"}\n"
-"#pushButton{\n"
-"    background-color: rgb(255, 255, 255);\n"
-"}\n"
-"#pushButton_3{\n"
-"    background-color: rgb(255, 255, 255);\n"
-"}\n"
-"#pushButton_4{\n"
-"    background-color: rgb(255, 255, 255);\n"
-"}\n"
-"#textBrowser{\n"
+"\n"
+"QTextBrowser{\n"
 "    border-radius: 35px;\n"
 "    padding-left:20px;\n"
 "    padding-right:20px;\n"
@@ -62,20 +45,35 @@ class Ui_MainWindow(object):
 "    color: rgb(255, 255, 255);\n"
 "    font-weight: bold;\n"
 "}\n"
-"#widget{\n"
-"    border-radius: 35px;\n"
-"    background-color: #88ffff;\n"
-"}\n"
+"\n"
 "QPushButton{\n"
 "    font: 14pt \"微软雅黑\";\n"
 "    border-radius: 25px;\n"
+"    background-color: rgb(255, 255, 255);\n"
+"}\n"
 "\n"
+"QPushButton::hover{\n"
+"    background-color: rgb(198, 255, 229);\n"
+"}\n"
+"\n"
+"#pushButton_2{\n"
+"    border-radius: 35px;\n"
 "}\n"
 "\n"
 "#frame{\n"
 "    border-radius: 50px;\n"
 "    border: 10px solid #1D5661;\n"
 "    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 #46AEEA, stop:1 #0092E5);\n"
+"}\n"
+"\n"
+"#frame_2{\n"
+"    border-radius: 35px;\n"
+"    background-color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"#widget{\n"
+"    border-radius: 35px;\n"
+"    background-color: #88ffff;\n"
 "}")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -84,6 +82,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setContentsMargins(15, 5, 15, -1)
+        self.horizontalLayout_2.setSpacing(20)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label = QtWidgets.QLabel(self.frame)
         self.label.setObjectName("label")
@@ -239,12 +238,13 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "维基百科客户端"))
-        self.lineEdit.setPlaceholderText(_translate("MainWindow", "要找些啥么"))
+        self.lineEdit.setPlaceholderText(_translate("MainWindow", "QLineEdit"))
         self.textBrowser.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'微软雅黑\'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.textBrowser.setPlaceholderText(_translate("MainWindow", "在上方输入你要查找的内容，按Enter或者图标搜索"))
         self.label_3.setText(_translate("MainWindow", "Author：雪中明月"))
         self.label_2.setText(_translate("MainWindow", "使用Python和PYQT制作\n"
 ""))

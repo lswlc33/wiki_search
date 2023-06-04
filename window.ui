@@ -18,32 +18,15 @@
     <item>
      <widget class="QFrame" name="frame">
       <property name="styleSheet">
-       <string notr="true">#frame_2{
-	border-radius: 35px;
-	background-color: rgb(255, 255, 255);
-}
-
-QLineEdit{
+       <string notr="true">QLineEdit{
 	padding-left:25px;
 	background-color: rgba(255, 255, 255, 0);
 	border: 0px solid rgba(255, 255, 255, 0);
 
 
 }
-#pushButton_2{
-	border-radius: 35px;
-	background-color: rgb(255, 255, 255);
-}
-#pushButton{
-	background-color: rgb(255, 255, 255);
-}
-#pushButton_3{
-	background-color: rgb(255, 255, 255);
-}
-#pushButton_4{
-	background-color: rgb(255, 255, 255);
-}
-#textBrowser{
+
+QTextBrowser{
 	border-radius: 35px;
 	padding-left:20px;
 	padding-right:20px;
@@ -60,20 +43,35 @@ QLabel{
 	color: rgb(255, 255, 255);
 	font-weight: bold;
 }
-#widget{
-	border-radius: 35px;
-	background-color: #88ffff;
-}
+
 QPushButton{
 	font: 14pt &quot;微软雅黑&quot;;
 	border-radius: 25px;
+	background-color: rgb(255, 255, 255);
+}
 
+QPushButton::hover{
+	background-color: rgb(198, 255, 229);
+}
+
+#pushButton_2{
+	border-radius: 35px;
 }
 
 #frame{
 	border-radius: 50px;
 	border: 10px solid #1D5661;
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 #46AEEA, stop:1 #0092E5);
+}
+
+#frame_2{
+	border-radius: 35px;
+	background-color: rgb(255, 255, 255);
+}
+
+#widget{
+	border-radius: 35px;
+	background-color: #88ffff;
 }</string>
       </property>
       <property name="frameShape">
@@ -85,6 +83,9 @@ QPushButton{
       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>20</number>
+         </property>
          <property name="leftMargin">
           <number>15</number>
          </property>
@@ -259,7 +260,7 @@ QPushButton{
 }</string>
                   </property>
                   <property name="placeholderText">
-                   <string>要找些啥么</string>
+                   <string>QLineEdit</string>
                   </property>
                  </widget>
                 </item>
@@ -315,6 +316,9 @@ QPushButton{
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'微软雅黑'; font-size:14pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="placeholderText">
+                <string>在上方输入你要查找的内容，按Enter或者图标搜索</string>
                </property>
               </widget>
              </item>
