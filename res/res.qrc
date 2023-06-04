@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="png">
+    <file>关闭.png</file>
+    <file>好友.png</file>
+    <file>书本.png</file>
+    <file>纸飞机.png</file>
+  </qresource>
+</RCC>
